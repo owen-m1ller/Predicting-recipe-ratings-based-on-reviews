@@ -5,19 +5,19 @@
 This project aims to predict the average rating of a recipe posted
 online based on information such as its description, nutrition info,
 and the time it takes to make the food. This will be a regression task
-since we are estimating average rating, which is a continuous variable.
+since we are predicting a number corresponding to a rating.
 
 I chose to use average rating as the response variable because a model
-predicting average rating could be very valuable. If the model was
+that predicts the average rating of an online recipe would be very valuable. If the model was
 effective, website oweners could use the model to predict which recipes
-would be well-received and promote those recipes more than recipes
-predicted to have a low rating so that viewers are more likely to find
+would be well-received. They could then promote those recipes more than recipes
+that were predicted to have a low rating so that viewers were more likely to find
 good recipes on their site.
 
 The evaluation metric I'll be using is RMSE (root mean squared error).
-RMSE can be impacted by outliers which might be dangerous in our
-dataset, but it will give us a straightforward understanding of how
-well or badly our model performs on the test set.
+RMSE will give us a straightforward understanding of how
+well or badly our model performs on the test set and will do so using the units of a rating.
+For example, an RMSE of .3 corresponds to an average error of about .3 stars of error in a rating prediction.
 
 All the columns that are explained during the next step will be
 feautures we can realisticaslly train our model on because each feature
@@ -26,9 +26,9 @@ website.
 
 ## Building a baseline model
 
-For a first-go at a model, I decided to go with linear regression.
-It's one of the most straightforward approach to many regression
-problems so I assumed our performance on linear regression would give
+In my first-go at a model, I decided to go with linear regression.
+It's one of the most straightforward approaches to a regression
+problem, so I assumed our performance on linear regression would give
 us a good baseline on how suited our features are for a regression task.
 
 For this baseline model I will apply two transformations: a
@@ -65,13 +65,13 @@ to numerically represent the text in these columns.
 
 Finally, I applied a standard scaled to the total_fat_pdv column since
 it was the most linearly correlated with the average rating.
-In the next step I will standardize all the features so that some
-aren't arbitrarily weighted more heavily. If a decision tree based model 
+In the next step, I will standardize all the features so that some
+aren't arbitrarily weighted more heavily. If a decision-tree-based model 
 ends up out-performing the linear regression model, this 
 standardization may become redundant.
 
 Evaluating our model based on RMSE, we find that on the training
-set our model was off by .3768 on average and on the test set
+set our model was off by .3768 on average, and on the test set
 our model was off by .735 on average. Predicting within the range of
 one star seems somewhat reasonable to me, but the disparity between
 our performance in the training and test set indicates we are
@@ -107,14 +107,14 @@ appear to be very correlated).
 
 I also realized that some of our overfitting might have been caused
 by the model learning to recognize unique words in each recipe
-and fitting accordingly. The steps could tended to be very unique
+and fitting accordingly. The steps tended to be very unique
 to each recipe, so I decided to use a function transformer to 
 replace this column with its length. Perhaps recipes with
 longer steps turn out better when people make them because of their
 detailed descriptions.
 
-Finally, I standardized all the numerical columns although this
-likely won't be so impactful in a model based off of decision trees.
+Finally, I standardized all the numerical columns, although this
+likely won't be so impactful considering that our model uses decision trees.
 
 I had to be very selective with the hyperparameters I wanted to explore.
 Because of how large the vectorized representations of categorical
@@ -154,7 +154,9 @@ as well on vegetarian recipes as non-vegetarian recipes. To find the
 answer to this question, we'll conduct a permutation test.
 
 The null hypothesis for our test will be that the model performs
-worse on vegetarian recipes than it does for non-vegetarian recipes.
+just as well on vegetarian recipes than it does for non-vegetarian recipes.
+The alternate hypothesis will be that the model performs worse when predicting
+the average rating of a vegetarian recipe.
 To test this hypothesis, our test statistic will be the 
 difference in RMSE values for vegetarian and non-vegetarian recipes.
 We'll choose a significance level of .01 since our dataframe is large.
