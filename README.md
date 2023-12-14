@@ -161,7 +161,7 @@ To test this hypothesis, our test statistic will be the
 difference in RMSE values for vegetarian and non-vegetarian recipes.
 We'll choose a significance level of .01 since our dataframe is large.
 
-After conducting the test, we obtain a p-value of 1, meaning we fail
+After conducting the test, we obtain a p-value of .8, meaning we fail
 to reject the null hypothesis. (Unfortunate due to runs times, I had to
 limit my number of repetitions to 10). Still, this p-value suggests
 that the model likely does just as well on vegetarian food as it does
